@@ -367,15 +367,30 @@ select#language {
                 } else {
                     result = 'פורמט תאריך לא חוקי עבור SAMSUNG.';
                 }
-            } else if (manufacturer === 'yageo') {
-                if (dateCode.length === 4) {
-                    const yearCode = dateCode.substring(0, 2);
-                    const weekCode = dateCode.substring(2, 4);
-                    const decoded = decodeYageoWeek(yearCode, weekCode);
-                    result = `תאריך ייצור: חודש ${decoded.month}, ${decoded.year}`;
+           } else if (manufacturer === 'yageo') {
+            if (dateCode.length === 4) {
+                const yearCode = dateCode.substring(0, 2);
+                const weekCode = dateCode.substring(2, 4);
+                const decoded = decodeYageoWeek(yearCode, weekCode);
+                result = `תאריך ייצור: חודש ${decoded.month}, ${decoded.year}`;
+            } else if (dateCode.length === 15) { // <--- ADD THIS NEW CONDITION
+                const yearCode = dateCode.charAt(1); // Second character is the year
+                const monthCode = dateCode.substring(2, 4); // Third and fourth characters are the month
+
+                // Assuming '1' means 2021, '2' means 2022, etc. relative to a base year.
+                // Let's assume the base year for '0' is 2020.
+                const year = 2020 + parseInt(yearCode, 10);
+                const month = monthCode.padStart(2, '0'); // Ensure two digits for month
+
+                if (parseInt(month) >= 1 && parseInt(month) <= 12) {
+                    result = `תאריך ייצור: ${month}-${year}`;
                 } else {
-                    result = 'פורמט תאריך לא חוקי עבור YAGEO.';
+                    result = 'פורמט תאריך לא חוקי (חודש לא תקין) עבור YAGEO.';
                 }
+            }
+            else {
+                result = 'פורמט תאריך לא חוקי עבור YAGEO.';
+            }
             } else if (manufacturer === 'viking') {
                 if (dateCode.length === 6) {
                     const year = '20' + dateCode.substring(0, 2);
@@ -591,150 +606,166 @@ select#language {
             return { year, month };
         }
 
-        // Decoding boxes map
-        const decodingMap = {
-            yageo: {
-                lengths: {
-                    4: {
-                        map: {
-                            1: 'Year',
-                            2: 'Year',
-                            3: 'Week',
-                            4: 'Week'
-                        }
-                    }
+  // Decoding boxes map
+const decodingMap = {
+    yageo: {
+        lengths: {
+            4: {
+                map: {
+                    1: 'Year',
+                    2: 'Year',
+                    3: 'Week',
+                    4: 'Week'
                 }
             },
-            omron: {
-                lengths: {
-                    6: {
-                        map: {
-                            1: 'Day',
-                            2: 'Day',
-                            3: 'Month',
-                            4: 'Year'
-                        }
-                    },
-                    7: {
-                        map: {
-                            1: 'Day',
-                            2: 'Day',
-                            3: 'Month',
-                            4: 'Year'
-                        }
-                    },
-                    12: {
-                        map: {
-                            2: 'Year',
-                            3: 'Month'
-                        }
-                    }
-                }
-            },
-            hitano: {
-                lengths: {
-                    12: {
-                        map: {
-                            5: 'Year',
-                            6: 'Year',
-                            7: 'Month',
-                            8: 'Day',
-                            9: 'Day'
-                        }
-                    }
-                }
-            },
-            eaton: {
-                lengths: {
-                    3: {
-                        map: {
-                            1: 'Year',
-                            2: 'Week',
-                            3: 'Week'
-                        }
-                    }
-                }
-            },
-            gigadevice: {
-                lengths: {
-                    6: {
-                        map: {
-                            3: 'Year',
-                            4: 'Year',
-                            5: 'Week',
-                            6: 'Week'
-                        }
-                    }
-                }
-            },
-            conquer: {
-                lengths: {
-                    9: {
-                        map: {
-                            4: 'Year',
-                            5: 'Month',
-                            6: 'Month'
-                        }
-                    },
-                    10: {
-                        map: {
-                            4: 'Year',
-                            5: 'Month',
-                            6: 'Month'
-                        }
-                    }
-                }
-            },
-            samsung: {
-                lengths: {
-                    7: {
-                        map: {
-                            2: 'Year',
-                            3: 'Month',
-                            4: 'Day'
-                        }
-                    }
-                }
-            },
-            panasonic: {
-                lengths: {
-                    23: {
-                        map: {
-                            6: 'Year',
-                            7: 'Month'
-                        }
-                    },
-                    12: {
-                        map: {
-                            2: 'Year',
-                            3: 'Month'
-                        }
-                    },
-                    4: {
-                        map: {
-                            1: 'Year',
-                            2: 'Month'
-                        }
-                    }
-                }
-            },
-            bellwether: {
-                lengths: {
-                    5: {
-                        map: {
-                            1: 'Year',
-                            2: 'Month'
-                        }
-                    },
-                    9: {
-                        map: {
-                            1: 'Year',
-                            2: 'Month'
-                        }
-                    }
+            15: { // תיקון: הוספת אורך חדש
+                map: {
+                    2: 'Year',   // התו השני
+                    3: 'Month',  // התו השלישי
+                    4: 'Month'   // התו הרביעי
                 }
             }
-        };
+        }
+    },
+
+    omron: {
+        lengths: {
+            6: {
+                map: {
+                    1: 'Day',
+                    2: 'Day',
+                    3: 'Month',
+                    4: 'Year'
+                }
+            },
+            7: {
+                map: {
+                    1: 'Day',
+                    2: 'Day',
+                    3: 'Month',
+                    4: 'Year'
+                }
+            },
+            12: {
+                map: {
+                    2: 'Year',
+                    3: 'Month'
+                }
+            }
+        }
+    },
+
+    hitano: {
+        lengths: {
+            12: {
+                map: {
+                    5: 'Year',
+                    6: 'Year',
+                    7: 'Month',
+                    8: 'Day',
+                    9: 'Day'
+                }
+            }
+        }
+    },
+
+    eaton: {
+        lengths: {
+            3: {
+                map: {
+                    1: 'Year',
+                    2: 'Week',
+                    3: 'Week'
+                }
+            }
+        }
+    },
+
+    gigadevice: {
+        lengths: {
+            6: {
+                map: {
+                    3: 'Year',
+                    4: 'Year',
+                    5: 'Week',
+                    6: 'Week'
+                }
+            }
+        }
+    },
+
+    conquer: {
+        lengths: {
+            9: {
+                map: {
+                    4: 'Year',
+                    5: 'Month',
+                    6: 'Month'
+                }
+            },
+            10: {
+                map: {
+                    4: 'Year',
+                    5: 'Month',
+                    6: 'Month'
+                }
+            }
+        }
+    },
+
+    samsung: {
+        lengths: {
+            7: {
+                map: {
+                    2: 'Year',
+                    3: 'Month',
+                    4: 'Day'
+                }
+            }
+        }
+    },
+
+    panasonic: {
+        lengths: {
+            23: {
+                map: {
+                    6: 'Year',
+                    7: 'Month'
+                }
+            },
+            12: {
+                map: {
+                    2: 'Year',
+                    3: 'Month'
+                }
+            },
+            4: {
+                map: {
+                    1: 'Year',
+                    2: 'Month'
+                }
+            }
+        }
+    },
+
+    bellwether: {
+        lengths: {
+            5: {
+                map: {
+                    1: 'Year',
+                    2: 'Month'
+                }
+            },
+            9: {
+                map: {
+                    1: 'Year',
+                    2: 'Month'
+                }
+            }
+        }
+    }
+};
+
 
         function showDecodingBoxesNew(dateCode, supplier) {
             const existingContainer = document.getElementById("decodingBoxes");
