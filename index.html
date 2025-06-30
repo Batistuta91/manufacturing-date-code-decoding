@@ -1,191 +1,212 @@
-
 <!DOCTYPE html>
 <html lang="he">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>מפענח תאריך ייצור</title>
-<style>
-   body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #eef2f3;
-    color: #333;
-    direction: rtl; /* ברירת מחדל */
-}
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #eef2f3;
+            color: #333;
+            direction: rtl;
+        }
 
+        body[lang="ar"] {
+            font-family: 'Tajawal', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    h1 {
-        background-color: #2b5876;
-        background-image: linear-gradient(to right, #4e4376, #2b5876);
-        color: white;
-        width: 100%;
-        text-align: center;
-        padding: 1.5rem 0;
-        margin: 0;
-        font-size: 2rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+        h1 {
+            background-color: #2b5876;
+            background-image: linear-gradient(to right, #4e4376, #2b5876);
+            color: white;
+            width: 100%;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin: 0;
+            font-size: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-    form {
-        background-color: white;
-        padding: 2rem;
-        border-radius: 12px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        width: 90%;
-        max-width: 500px;
-        margin-top: 2rem;
-    }
+        form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            margin-top: 2rem;
+        }
 
-    label {
-        display: block;
-        margin-bottom: 0.75rem;
-        font-weight: bold;
-        font-size: 1rem;
-        color: #4e4376;
-    }
+        label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-weight: bold;
+            font-size: 1rem;
+            color: #4e4376;
+        }
 
-    select, input {
-        width: 100%;
-        padding: 0.6rem;
-        margin-bottom: 1.5rem;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        font-size: 1rem;
-        transition: border-color 0.3s;
-    }
+        select, input {
+            width: 100%;
+            padding: 0.6rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
 
-    select:focus, input:focus {
-        outline: none;
-        border-color: #2b5876;
-    }
+        select:focus, input:focus {
+            outline: none;
+            border-color: #2b5876;
+        }
 
-    button {
-        background-color: #2b5876;
-        background-image: linear-gradient(to right, #4e4376, #2b5876);
-        color: white;
-        border: none;
-        padding: 0.8rem;
-        border-radius: 6px;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background-color 0.3s, transform 0.2s;
-    }
+        button {
+            background-color: #2b5876;
+            background-image: linear-gradient(to right, #4e4376, #2b5876);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
 
-    button:hover {
-        background-color: #4e4376;
-        transform: translateY(-2px);
-    }
+        button:hover {
+            background-color: #4e4376;
+            transform: translateY(-2px);
+        }
 
-    button:active {
-        transform: translateY(0);
-    }
+        button:active {
+            transform: translateY(0);
+        }
 
-    p#result {
-        background-color: #ffffff;
-        padding: 1rem;
-        border-radius: 12px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        width: 90%;
-        max-width: 500px;
-        margin-top: 1rem;
-        word-break: break-word;
-        color: #333;
-        font-weight: bold;
-        font-size: 1.1rem;
-    }
+        p#result {
+            background-color: #ffffff;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 500px;
+            margin-top: 1rem;
+            word-break: break-word;
+            color: #333;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
 
-    #barcode-list {
-        margin-top: 1rem;
-        max-width: 500px;
-        word-break: break-word;
-        text-align: center;
-    }
+        #barcode-list {
+            margin-top: 1rem;
+            max-width: 500px;
+            word-break: break-word;
+            text-align: center;
+        }
 
-    #barcode-list ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
+        #barcode-list ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
 
-    #barcode-list li {
-        margin-bottom: 0.5rem;
-        font-size: 0.9rem;
-        color: #666;
-    }
+        #barcode-list li {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
 
-    #charCount {
-        font-size: 0.9rem;
-        color: #2b5876;
-        margin-bottom: 1rem;
-        font-weight: bold;
-    }
+        #charCount {
+            font-size: 0.9rem;
+            color: #2b5876;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
 
-    #decodingBoxes {
-        direction: ltr;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 5px;
-        justify-content: center;
-        align-items: center;
-        width: auto;
-        padding: 10px;
-        margin: 20px auto;
-        border: 1px solid #ddd;
-        background-color: #f7f7f7;
-        border-radius: 8px;
-    }
+        #decodingBoxes {
+            direction: ltr;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            justify-content: center;
+            align-items: center;
+            width: auto;
+            padding: 10px;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            background-color: #f7f7f7;
+            border-radius: 8px;
+        }
 
-    #decodingBoxes div {
-        width: 40px;
-        height: 40px;
-        border: 1px solid #4e4376;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 14px;
-        font-weight: bold;
-        background-color: #ffffff;
-        border-radius: 6px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-select#language {
-    appearance: none; /* ביטול סגנון דפדפן ברירת מחדל */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    text-align: center; /* יישור הטקסט */
-    text-align-last: center; /* יישור אופציות בתפריט */
-    direction: rtl; /* יישור RTL */
-    color: #000; /* צבע טקסט */
-    background-color: #fff; /* צבע רקע */
-    border: 1px solid #ccc; /* גבול */
-    border-radius: 4px; /* פינות מעוגלות */
-    padding: 0.3rem; /* ריווח פנימי */
-    font-size: 12px; /* גודל טקסט קטן יותר */
-    width: 100px; /* רוחב קטן יותר */
-    height: 30px; /* גובה קטן יותר */
-}
+        #decodingBoxes div {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #4e4376;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            background-color: #ffffff;
+            border-radius: 6px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
+        #decodingBoxes div[data-label="Year"] {
+            background-color: #e6f3ff;
+        }
 
+        #decodingBoxes div[data-label="Week"] {
+            background-color: #e6ffe6;
+        }
 
+        #decodingBoxes div[data-label="Month"] {
+            background-color: #ffe6e6;
+        }
+
+        #decodingBoxes div[data-label="Day"] {
+            background-color: #f3e6ff;
+        }
+
+        select#language {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            text-align: center;
+            text-align-last: center;
+            direction: rtl;
+            color: #000;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 0.3rem;
+            font-size: 12px;
+            width: 100px;
+            height: 30px;
+        }
+
+        select#language[lang="ar"] {
+            font-family: 'Tajawal', sans-serif;
+        }
     </style>
 </head>
 <body>
     <h1>מפענח תאריך ייצור</h1>
-   <select id="language">
-    <option value="he">עברית</option>
-    <option value="en">English</option>
-    <option value="ar">العربية</option>
-    <option value="fr">Français</option>
-    <option value="es">Español</option>
-</select>
+    <select id="language" aria-label="Select Language">
+        <option value="he">עברית</option>
+        <option value="en">English</option>
+        <option value="ar">العربية</option>
+        <option value="fr">Français</option>
+        <option value="es">Español</option>
+    </select>
 
     <form id="dateCodeForm">
         <label for="manufacturer">בחר יצרן:</label>
-        <select id="manufacturer" name="manufacturer">
+        <select id="manufacturer" name="manufacturer" aria-label="Select Manufacturer">
             <option value="samsung">SAMSUNG</option>
             <option value="yageo">YAGEO</option>
             <option value="viking">VIKING</option>
@@ -199,12 +220,14 @@ select#language {
             <option value="everlight">EVERLIGHT</option>
             <option value="gigadevice">GIGADEVICE</option>
             <option value="bellwether">BELLWETHER</option>
+            <option value="delta">DELTA (DC indicated within serial number)</option>
+
         </select>
         <label for="dateCode">הכנס קוד תאריך:</label>
-        <input type="text" id="dateCode" name="dateCode" required>
+        <input type="text" id="dateCode" name="dateCode" required aria-label="Enter Date Code">
         <p id="charCount">מספר התווים: 0</p>
-        <button type="submit">פענח</button>
-        <button type="button" id scanBarcode">סרוק ברקוד</button>
+        <button type="submit" aria-label="Decode Date Code">פענח</button>
+        <button type="button" id="scanBarcode" aria-label="Scan Barcode">סרוק ברקוד</button>
     </form>
     <p id="result"></p>
     <div id="barcode-list"></div>
@@ -213,63 +236,108 @@ select#language {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
     <script>
         const translations = {
-    he: {
-        title: "מפענח תאריך ייצור",
-        selectManufacturer: "בחר יצרן:",
-        enterDateCode: "הכנס קוד תאריך:",
-        decodeButton: "פענח",
-        scanBarcodeButton: "סרוק ברקוד",
-        charCount: "מספר התווים: ",
-        result: "תוצאה:",
-        decodingBoxes: "פענוח קוד:"
-    },
-    en: {
-        title: "Production Date Decoder",
-        selectManufacturer: "Select Manufacturer:",
-        enterDateCode: "Enter Date Code:",
-        decodeButton: "Decode",
-        scanBarcodeButton: "Scan Barcode",
-        charCount: "Character Count: ",
-        result: "Result:",
-        decodingBoxes: "Decoding Code:"
-    },
-    ar: {
-        title: "مُفسر تاريخ الإنتاج",
-        selectManufacturer: "اختر الشركة المصنعة:",
-        enterDateCode: "أدخل رمز التاريخ:",
-        decodeButton: "فك الترميز",
-        scanBarcodeButton: "مسح الباركود",
-        charCount: "عدد الأحرف: ",
-        result: "النتيجة:",
-        decodingBoxes: "تفكيك الكود:"
-    },
-    fr: {
-        title: "Décodeur de Date de Production",
-        selectManufacturer: "Sélectionner le fabricant:",
-        enterDateCode: "Entrez le code de date:",
-        decodeButton: "Décoder",
-        scanBarcodeButton: "Scanner le code-barres",
-        charCount: "Nombre de caractères: ",
-        result: "Résultat:",
-        decodingBoxes: "Décodage du code:"
-    },
-    es: {
-        title: "Descodificador de Fecha de Producción",
-        selectManufacturer: "Seleccionar fabricante:",
-        enterDateCode: "Introducir código de fecha:",
-        decodeButton: "Descifrar",
-        scanBarcodeButton: "Escanear código de barras",
-        charCount: "Número de caracteres: ",
-        result: "Resultado:",
-        decodingBoxes: "Descodificación del código:"
-    }
-};
-
+            he: {
+                title: "מפענח תאריך ייצור",
+                selectManufacturer: "בחר יצרן:",
+                enterDateCode: "הכנס קוד תאריך:",
+                decodeButton: "פענח",
+                scanBarcodeButton: "סרוק ברקוד",
+                charCount: "מספר התווים: ",
+                result: "תוצאה:",
+                decodingBoxes: "פענוח קוד:",
+                invalidFormat: "פורמט תאריך לא חוקי עבור {manufacturer}.",
+                invalidCharacters: "קוד תאריך מכיל תווים לא חוקיים.",
+                noFileSelected: "לא נבחר קובץ.",
+                invalidFileType: "סוג קובץ לא תקין. אנא בחר תמונה.",
+                barcodeDetected: "ברקוד מזוהה",
+                barcodeNotDetected: "לא זוהה ברקוד. נסה שוב.",
+                imageLoadError: "שגיאה בטעינת התמונה.",
+                fileReadError: "שגיאה בקריאת הקובץ.",
+                processing: "מעבד תמונה..."
+            },
+            en: {
+                title: "Production Date Decoder",
+                selectManufacturer: "Select Manufacturer:",
+                enterDateCode: "Enter Date Code:",
+                decodeButton: "Decode",
+                scanBarcodeButton: "Scan Barcode",
+                charCount: "Character Count: ",
+                result: "Result:",
+                decodingBoxes: "Decoding Code:",
+                invalidFormat: "Invalid date format for {manufacturer}.",
+                invalidCharacters: "Date code contains invalid characters.",
+                noFileSelected: "No file selected.",
+                invalidFileType: "Invalid file type. Please select an image.",
+                barcodeDetected: "Barcode detected",
+                barcodeNotDetected: "No barcode detected. Try again.",
+                imageLoadError: "Error loading image.",
+                fileReadError: "Error reading file.",
+                processing: "Processing image..."
+            },
+            ar: {
+                title: "مُفسر تاريخ الإنتاج",
+                selectManufacturer: "اختر الشركة المصنعة:",
+                enterDateCode: "أدخل رمز التاريخ:",
+                decodeButton: "فك الترميز",
+                scanBarcodeButton: "مسح الباركود",
+                charCount: "عدد الأحرف: ",
+                result: "النتيجة:",
+                decodingBoxes: "تفكيك الكود:",
+                invalidFormat: "تنسيق التاريخ غير صالح لـ {manufacturer}.",
+                invalidCharacters: "رمز التاريخ يحتوي على أحرف غير صالحة.",
+                noFileSelected: "لم يتم اختيار ملف.",
+                invalidFileType: "نوع الملف غير صالح. يرجى اختيار صورة.",
+                barcodeDetected: "تم اكتشاف الباركود",
+                barcodeNotDetected: "لم يتم اكتشاف الباركود. حاول مرة أخرى.",
+                imageLoadError: "خطأ في تحميل الصورة.",
+                fileReadError: "خطأ في قراءة الملف.",
+                processing: "جارٍ معالجة الصورة..."
+            },
+            fr: {
+                title: "Décodeur de Date de Production",
+                selectManufacturer: "Sélectionner le fabricant:",
+                enterDateCode: "Entrez le code de date:",
+                decodeButton: "Décoder",
+                scanBarcodeButton: "Scanner le code-barres",
+                charCount: "Nombre de caractères: ",
+                result: "Résultat:",
+                decodingBoxes: "Décodage du code:",
+                invalidFormat: "Format de date invalide pour {manufacturer}.",
+                invalidCharacters: "Le code de date contient des caractères invalides.",
+                noFileSelected: "Aucun fichier sélectionné.",
+                invalidFileType: "Type de fichier invalide. Veuillez sélectionner une image.",
+                barcodeDetected: "Code-barres détecté",
+                barcodeNotDetected: "Aucun code-barres détecté. Réessayez.",
+                imageLoadError: "Erreur de chargement de l'image.",
+                fileReadError: "Erreur de lecture du fichier.",
+                processing: "Traitement de l'image..."
+            },
+            es: {
+                title: "Descodificador de Fecha de Producción",
+                selectManufacturer: "Seleccionar fabricante:",
+                enterDateCode: "Introducir código de fecha:",
+                decodeButton: "Descifrar",
+                scanBarcodeButton: "Escanear código de barras",
+                charCount: "Número de caracteres: ",
+                result: "Resultado:",
+                decodingBoxes: "Descodificación del código:",
+                invalidFormat: "Formato de fecha inválido para {manufacturer}.",
+                invalidCharacters: "El código de fecha contiene caracteres inválidos.",
+                noFileSelected: "No se seleccionó ningún archivo.",
+                invalidFileType: "Tipo de archivo inválido. Por favor, selecciona una imagen.",
+                barcodeDetected: "Código de barras detectado",
+                barcodeNotDetected: "No se detectó ningún código de barras. Intenta de nuevo.",
+                imageLoadError: "Error al cargar la imagen.",
+                fileReadError: "Error al leer el archivo.",
+                processing: "Procesando imagen..."
+            }
+        };
 
         // Character count update
         document.getElementById('dateCode').addEventListener('input', function() {
             const charCount = this.value.length;
-            document.getElementById('charCount').innerText = `מספר התווים: ${charCount}`;
+            const language = document.getElementById('language').value;
+            document.getElementById('charCount').innerText = `${translations[language].charCount}${charCount}`;
         });
 
         // BELLWETHER decoding function
@@ -293,18 +361,18 @@ select#language {
 
         // Unified decodeDate function
         function decodeDate(manufacturer, dateCode) {
+            const language = document.getElementById('language').value;
             let result = '';
             if (manufacturer === 'bellwether') {
                 const decodedDate = decodeBellwether(dateCode);
-                result = decodedDate ? `תאריך ייצור: ${decodedDate.month}-${decodedDate.year}` : 'פורמט תאריך לא חוקי עבור BELLWETHER.';
+                result = decodedDate ? `${translations[language].result} ${decodedDate.month}-${decodedDate.year}` : translations[language].invalidFormat.replace('{manufacturer}', 'BELLWETHER');
             } else if (manufacturer === 'gigadevice') {
                 const decodedDate = decodeGigaDevice(dateCode);
-                result = decodedDate ? `תאריך ייצור: ${decodedDate.month}-${decodedDate.year}` : 'פורמט תאריך לא חוקי עבור GIGADEVICE.';
+                result = decodedDate ? `${translations[language].result} ${decodedDate.month}-${decodedDate.year}` : translations[language].invalidFormat.replace('{manufacturer}', 'GIGADEVICE');
             } else if (manufacturer === 'eaton') {
                 const decodedDate = decodeEaton(dateCode);
-                result = decodedDate ? `תאריך ייצור: חודש ${decodedDate.month}, ${decodedDate.year}` : 'פורמט תאריך לא חוקי עבור EATON.';
+                result = decodedDate ? `${translations[language].result} ${translations[language].month} ${decodedDate.month}, ${decodedDate.year}` : translations[language].invalidFormat.replace('{manufacturer}', 'EATON');
             } else if (manufacturer === 'panasonic') {
-                // Panasonic logic from original code
                 if (dateCode.length === 23) {
                     const yearCode = dateCode.charAt(5);
                     const monthCode = dateCode.charAt(6);
@@ -315,7 +383,7 @@ select#language {
                         'O': '10', 'N': '11', 'D': '12'
                     };
                     const month = monthMap[monthCode];
-                    result = (year && month) ? `תאריך ייצור: ${month}-${year}` : 'פורמט תאריך לא חוקי עבור PANASONIC.';
+                    result = (year && month) ? `${translations[language].result} ${month}-${year}` : translations[language].invalidFormat.replace('{manufacturer}', 'PANASONIC');
                 } else if (dateCode.length === 12) {
                     const yearCode = dateCode.charAt(1);
                     const monthCode = dateCode.charAt(2);
@@ -326,14 +394,14 @@ select#language {
                         'O': '10', 'N': '11', 'D': '12'
                     };
                     const month = monthMap[monthCode];
-                    result = (year && month) ? `תאריך ייצור: ${month}-${year}` : 'פורמט תאריך לא חוקי עבור PANASONIC.';
+                    result = (year && month) ? `${translations[language].result} ${month}-${year}` : translations[language].invalidFormat.replace('{manufacturer}', 'PANASONIC');
                 } else if ([4, 5, 6, 7, 8].includes(dateCode.length)) {
                     const yearCode = dateCode.charAt(dateCode.length === 4 ? 0 : dateCode.length === 5 ? 0 : dateCode.length === 6 ? 0 : 2);
                     const weekCode = dateCode.length === 4 ? dateCode.charAt(1) : dateCode.substring(dateCode.length === 5 ? 1 : 3, dateCode.length === 5 ? 3 : 5);
                     const decoded = dateCode.length === 4 ? decodePanasonicMonth(yearCode, weekCode) : decodePanasonicWeek(yearCode, weekCode);
-                    result = decoded ? `תאריך ייצור: חודש ${decoded.month}, ${decoded.year}` : 'פורמט תאריך לא חוקי עבור PANASONIC.';
+                    result = decoded ? `${translations[language].result} ${translations[language].month} ${decoded.month}, ${decoded.year}` : translations[language].invalidFormat.replace('{manufacturer}', 'PANASONIC');
                 } else {
-                    result = 'פורמט תאריך לא חוקי עבור PANASONIC.';
+                    result = translations[language].invalidFormat.replace('{manufacturer}', 'PANASONIC');
                 }
             } else if (manufacturer === 'samsung') {
                 const match = dateCode.match(/^.(.)(.)(.)/);
@@ -360,45 +428,46 @@ select#language {
                         'P': '25', 'Q': '26', 'R': '27', 'S': '28', 'T': '29', 'U': '30',
                         'V': '31'
                     };
-                    const year = yearMap[yearCode] || 'שנה לא ידועה';
-                    const month = monthMap[monthCode] || 'חודש לא ידוע';
-                    const day = dayMap[dayCode] || 'יום לא ידוע';
-                    result = (year !== 'שנה לא ידועה' && month !== 'חודש לא ידוע' && day !== 'יום לא ידוע') ? `תאריך ייצור: ${day}-${month}-${year}` : 'פורמט תאריך לא חוקי עבור SAMSUNG.';
+                    const year = yearMap[yearCode] || 'unknown';
+                    const month = monthMap[monthCode] || 'unknown';
+                    const day = dayMap[dayCode] || 'unknown';
+                    result = (year !== 'unknown' && month !== 'unknown' && day !== 'unknown') 
+                        ? `${translations[language].result} ${day}-${month}-${year}` 
+                        : translations[language].invalidFormat.replace('{manufacturer}', 'SAMSUNG');
                 } else {
-                    result = 'פורמט תאריך לא חוקי עבור SAMSUNG.';
+                    result = translations[language].invalidFormat.replace('{manufacturer}', 'SAMSUNG');
                 }
-           } else if (manufacturer === 'yageo') {
-            if (dateCode.length === 4) {
-                const yearCode = dateCode.substring(0, 2);
-                const weekCode = dateCode.substring(2, 4);
-                const decoded = decodeYageoWeek(yearCode, weekCode);
-                result = `תאריך ייצור: חודש ${decoded.month}, ${decoded.year}`;
-            } else if (dateCode.length === 15) { // <--- ADD THIS NEW CONDITION
-                const yearCode = dateCode.charAt(1); // Second character is the year
-                const monthCode = dateCode.substring(2, 4); // Third and fourth characters are the month
-
-                // Assuming '1' means 2021, '2' means 2022, etc. relative to a base year.
-                // Let's assume the base year for '0' is 2020.
-                const year = 2020 + parseInt(yearCode, 10);
-                const month = monthCode.padStart(2, '0'); // Ensure two digits for month
-
-                if (parseInt(month) >= 1 && parseInt(month) <= 12) {
-                    result = `תאריך ייצור: ${month}-${year}`;
+            } else if (manufacturer === 'yageo') {
+                if (dateCode.length === 4) {
+                    const yearCode = dateCode.substring(0, 2);
+                    const weekCode = dateCode.substring(2, 4);
+                    const decoded = decodeYageoWeek(yearCode, weekCode);
+                    result = decoded 
+                        ? `${translations[language].result} ${translations[language].month} ${decoded.month}, ${decoded.year}` 
+                        : translations[language].invalidFormat.replace('{manufacturer}', 'YAGEO');
+                } else if (dateCode.length === 15) {
+                    const yearCode = dateCode.charAt(1);
+                    const monthCode = dateCode.substring(2, 4);
+                    const year = 2020 + parseInt(yearCode, 10);
+                    const month = monthCode.padStart(2, '0');
+                    if (parseInt(month) >= 1 && parseInt(month) <= 12) {
+                        result = `${translations[language].result} ${month}-${year}`;
+                    } else {
+                        result = translations[language].invalidFormat.replace('{manufacturer}', 'YAGEO');
+                    }
                 } else {
-                    result = 'פורמט תאריך לא חוקי (חודש לא תקין) עבור YAGEO.';
+                    result = translations[language].invalidFormat.replace('{manufacturer}', 'YAGEO');
                 }
-            }
-            else {
-                result = 'פורמט תאריך לא חוקי עבור YAGEO.';
-            }
             } else if (manufacturer === 'viking') {
                 if (dateCode.length === 6) {
                     const year = '20' + dateCode.substring(0, 2);
                     const month = dateCode.substring(2, 4);
                     const day = dateCode.substring(4, 6);
-                    result = `תאריך ייצור: ${day}-${month}-${year}`;
+                    result = (parseInt(month) >= 1 && parseInt(month) <= 12 && parseInt(day) >= 1 && parseInt(day) <= 31)
+                        ? `${translations[language].result} ${day}-${month}-${year}`
+                        : translations[language].invalidFormat.replace('{manufacturer}', 'VIKING');
                 } else {
-                    result = 'פורמן תאריך לא חוקי עבור VIKING.';
+                    result = translations[language].invalidFormat.replace('{manufacturer}', 'VIKING');
                 }
             } else if (manufacturer === 'everlight') {
                 if (dateCode.length === 19) {
@@ -406,12 +475,12 @@ select#language {
                     const month = dateCode.substring(3, 5);
                     const day = dateCode.substring(5, 7);
                     if (parseInt(month) >= 1 && parseInt(month) <= 12 && parseInt(day) >= 1 && parseInt(day) <= 31) {
-                        result = `תאריך ייצור: ${day}/${month}/${year}`;
+                        result = `${translations[language].result} ${day}/${month}/${year}`;
                     } else {
-                        result = 'תאריך לא תקין עבור EVERLIGHT.';
+                        result = translations[language].invalidFormat.replace('{manufacturer}', 'EVERLIGHT');
                     }
                 } else {
-                    result = 'קוד תאריך לא חוקי (לא מכיל 19 תווים).';
+                    result = translations[language].invalidFormat.replace('{manufacturer}', 'EVERLIGHT');
                 }
             } else if (manufacturer === 'omron') {
                 if (dateCode.length === 2) {
@@ -423,7 +492,7 @@ select#language {
                     };
                     const year = `202${yearCode}`;
                     const month = monthMap[monthCode];
-                    result = (year && month) ? `תאריך ייצור: ${month}-${year}` : 'פורמט תאריך לא חוקי עבור OMRON.';
+                    result = (year && month) ? `${translations[language].result} ${month}-${year}` : translations[language].invalidFormat.replace('{manufacturer}', 'OMRON');
                 } else if (dateCode.length === 3) {
                     const dayCode = dateCode.charAt(0);
                     const monthCode = dateCode.charAt(1);
@@ -443,7 +512,7 @@ select#language {
                     const year = `202${yearCode}`;
                     const month = monthMap[monthCode];
                     const day = dayMap[dayCode];
-                    result = (year && month && day) ? `DIP SWITCH AND OPTO SWITCH תאריך ייצור: ${day}-${month}-${year}` : 'פורמט תאריך לא חוקי עבור OMRON.';
+                    result = (year && month && day) ? `${translations[language].result} DIP SWITCH AND OPTO SWITCH ${day}-${month}-${year}` : translations[language].invalidFormat.replace('{manufacturer}', 'OMRON');
                 } else if ([6, 7].includes(dateCode.length)) {
                     const day = dateCode.substring(0, 2);
                     const monthCode = dateCode.charAt(2);
@@ -454,13 +523,13 @@ select#language {
                     };
                     const year = 2020 + parseInt(yearCode, 10);
                     const month = monthMap[monthCode];
-                    result = (year && month && parseInt(day) >= 1 && parseInt(day) <= 31) ? `תאריך ייצור: ${day}-${month}-${year}` : 'פורמט תאריך לא חוקי עבור OMRON.';
+                    result = (year && month && parseInt(day) >= 1 && parseInt(day) <= 31) ? `${translations[language].result} ${day}-${month}-${year}` : translations[language].invalidFormat.replace('{manufacturer}', 'OMRON');
                 } else if (dateCode.length === 12) {
                     const yearCode = dateCode.charAt(1);
                     const monthCode = dateCode.charAt(2);
                     const yearMap = {
                         '1': 2021, '2': 2022, '3': 2023, '4': 2024, '5': 2025,
-                        '6': 2026, '7': 2027, '8': 2028, '9': 2029
+                        '6': 2026, '7': '2027', '8': '2028', '9': 2029
                     };
                     const monthMap = {
                         '1': '01', '2': '02', '3': '03', '4': '04', '5': '05', '6': '06',
@@ -468,43 +537,53 @@ select#language {
                     };
                     const year = yearMap[yearCode];
                     const month = monthMap[monthCode];
-                    result = (year && month) ? `תאריך ייצור: ${month}/${year}` : 'פורמט תאריך לא חוקי עבור OMRON.';
+                    result = (year && month) ? `${translations[language].result} ${month}/${year}` : translations[language].invalidFormat.replace('{manufacturer}', 'OMRON');
                 } else {
-                    result = 'פורמט תאריך לא חוקי עבור OMRON.';
+                    result = translations[language].invalidFormat.replace('{manufacturer}', 'OMRON');
                 }
             } else if (manufacturer === 'hitano') {
                 const decodedDate = decodeHitano(dateCode);
-                result = (decodedDate && decodedDate.month && decodedDate.day) ? `תאריך ייצור: ${decodedDate.day}-${decodedDate.month}-${decodedDate.year}` : 'פורמט תאריך לא חוקי עבור HITANO.';
+                result = (decodedDate && decodedDate.month && decodedDate.day) 
+                    ? `${translations[language].result} ${decodedDate.day}-${decodedDate.month}-${decodedDate.year}` 
+                    : translations[language].invalidFormat.replace('{manufacturer}', 'HITANO');
             } else if (manufacturer === 'conquer') {
                 if (dateCode.length === 9) {
                     const yearCode = dateCode.charAt(3);
                     const monthCode = dateCode.substring(4, 6);
                     const year = 2020 + parseInt(yearCode);
                     const month = monthCode.padStart(2, '0');
-                    result = (parseInt(month) >= 1 && parseInt(month) <= 12) ? `תאריך ייצור: ${month}-${year}` : 'פורמט תאריך לא חוקי עבור CONQUER.';
+                    result = (parseInt(month) >= 1 && parseInt(month) <= 12) 
+                        ? `${translations[language].result} ${month}-${year}` 
+                        : translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
                 } else if (dateCode.length === 31 && dateCode.includes('*')) {
                     const datePart = dateCode.split('*').pop();
                     if (datePart && datePart.length === 6) {
                         const year = '20' + datePart.substring(0, 2);
                         const month = datePart.substring(2, 4);
                         const day = datePart.substring(4, 6);
-                        result = (parseInt(month) >= 1 && parseInt(month) <= 12 && parseInt(day) >= 1 && parseInt(day) <= 31) ? `תאריך ייצור: ${day}-${month}-${year}` : 'פורמט תאריך לא חוקי עבור CONQUER.';
+                        result = (parseInt(month) >= 1 && parseInt(month) <= 12 && parseInt(day) >= 1 && parseInt(day) <= 31) 
+                            ? `${translations[language].result} ${day}-${month}-${year}` 
+                            : translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
                     } else {
-                        result = 'פורמט תאריך לא חוקי עבור CONQUER.';
+                        result = translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
                     }
                 } else if (dateCode.length === 10 && dateCode.startsWith('S')) {
                     const year = '20' + dateCode.substring(4, 6);
                     const month = dateCode.substring(6, 8);
                     const day = dateCode.substring(8, 10);
-                    result = (parseInt(month) >= 1 && parseInt(month) <= 12 && parseInt(day) >= 1 && parseInt(day) <= 31) ? `תאריך ייצור: ${day}-${month}-${year}` : 'פורמן תאריך לא חוקי עבור CONQUER.';
+                    result = (parseInt(month) >= 1 && parseInt(month) <= 12 && parseInt(day) >= 1 && parseInt(day) <= 31) 
+                        ? `${translations[language].result} ${day}-${month}-${year}` 
+                        : translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
                 } else if (dateCode.length === 10 && /^[A-Z0-9]{3}[0-9]{7}$/.test(dateCode)) {
                     const yearCode = dateCode.charAt(3);
                     const monthCode = dateCode.substring(4, 6);
                     const year = 2020 + parseInt(yearCode);
                     const month = monthCode.padStart(2, '0');
-                    result = (parseInt(month) >= 1 && parseInt(month) <= 12) ? `תאריך ייצור: ${month}-${year}` : 'פורמט תאריך לא חוקי עבור CONQUER.';
+                    result = (parseInt(month) >= 1 && parseInt(month) <= 12) 
+                        ? `${translations[language].result} ${month}-${year}` 
+                        : translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
                 } else {
-                    result = 'פורמט תאריך לא חוקי עבור CONQUER.';
+                    result = translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
                 }
             } else if (manufacturer === 'unisonic') {
                 if (dateCode.length === 4) {
@@ -520,12 +599,30 @@ select#language {
                     };
                     const year = yearMap[yearCode];
                     const month = monthMap[monthCode];
-                    result = (year && month) ? `תאריך ייצור: ${month}-${year}` : 'פורמט תאריך לא חוקי עבור UNISONIC.';
+                    result = (year && month) 
+                        ? `${translations[language].result} ${month}-${year}` 
+                        : translations[language].invalidFormat.replace('{manufacturer}', 'UNISONIC');
                 } else {
-                    result = 'פורמט תאריך לא חוקי עבור UNISONIC.';
+                    result = translations[language].invalidFormat.replace('{manufacturer}', 'UNISONIC');
+                }
+            } else if (manufacturer === 'delta') {
+                if (dateCode.length === 19) {
+                    const yearCode = dateCode.substring(10, 12);
+                    const weekCode = dateCode.substring(12, 14);
+                    const year = parseInt(yearCode, 10) + 2000;
+                    const week = parseInt(weekCode, 10);
+                    if (week >= 1 && week <= 52 && !isNaN(year)) {
+                        const month = Math.min(Math.ceil(week / 4), 12);
+                        const monthPadded = String(month).padStart(2, '0');
+                        result = `${translations[language].result} ${monthPadded}-${year}`;
+                    } else {
+                        result = translations[language].invalidFormat.replace('{manufacturer}', 'DELTA');
+                    }
+                } else {
+                    result = translations[language].invalidFormat.replace('{manufacturer}', 'DELTA');
                 }
             } else {
-                result = 'יצרן לא ידוע.';
+                result = translations[language].invalidFormat.replace('{manufacturer}', manufacturer.toUpperCase());
             }
             return result;
         }
@@ -606,166 +703,206 @@ select#language {
             return { year, month };
         }
 
-  // Decoding boxes map
-const decodingMap = {
-    yageo: {
-        lengths: {
-            4: {
-                map: {
-                    1: 'Year',
-                    2: 'Year',
-                    3: 'Week',
-                    4: 'Week'
+        const decodingMap = {
+            yageo: {
+                lengths: {
+                    4: {
+                        map: {
+                            1: 'Year',
+                            2: 'Year',
+                            3: 'Week',
+                            4: 'Week'
+                        }
+                    },
+                    15: {
+                        map: {
+                            2: 'Year',
+                            3: 'Month',
+                            4: 'Month'
+                        }
+                    }
                 }
             },
-            15: { // תיקון: הוספת אורך חדש
-                map: {
-                    2: 'Year',   // התו השני
-                    3: 'Month',  // התו השלישי
-                    4: 'Month'   // התו הרביעי
-                }
-            }
-        }
-    },
-
-    omron: {
-        lengths: {
-            6: {
-                map: {
-                    1: 'Day',
-                    2: 'Day',
-                    3: 'Month',
-                    4: 'Year'
-                }
-            },
-            7: {
-                map: {
-                    1: 'Day',
-                    2: 'Day',
-                    3: 'Month',
-                    4: 'Year'
+            omron: {
+                lengths: {
+                    6: {
+                        map: {
+                            1: 'Day',
+                            2: 'Day',
+                            3: 'Month',
+                            4: 'Year'
+                        }
+                    },
+                    7: {
+                        map: {
+                            1: 'Day',
+                            2: 'Day',
+                            3: 'Month',
+                            4: 'Year'
+                        }
+                    },
+                    12: {
+                        map: {
+                            2: 'Year',
+                            3: 'Month'
+                        }
+                    }
                 }
             },
-            12: {
-                map: {
-                    2: 'Year',
-                    3: 'Month'
-                }
-            }
-        }
-    },
-
-    hitano: {
-        lengths: {
-            12: {
-                map: {
-                    5: 'Year',
-                    6: 'Year',
-                    7: 'Month',
-                    8: 'Day',
-                    9: 'Day'
-                }
-            }
-        }
-    },
-
-    eaton: {
-        lengths: {
-            3: {
-                map: {
-                    1: 'Year',
-                    2: 'Week',
-                    3: 'Week'
-                }
-            }
-        }
-    },
-
-    gigadevice: {
-        lengths: {
-            6: {
-                map: {
-                    3: 'Year',
-                    4: 'Year',
-                    5: 'Week',
-                    6: 'Week'
-                }
-            }
-        }
-    },
-
-    conquer: {
-        lengths: {
-            9: {
-                map: {
-                    4: 'Year',
-                    5: 'Month',
-                    6: 'Month'
+            hitano: {
+                lengths: {
+                    12: {
+                        map: {
+                            5: 'Year',
+                            6: 'Year',
+                            7: 'Month',
+                            8: 'Day',
+                            9: 'Day'
+                        }
+                    }
                 }
             },
-            10: {
-                map: {
-                    4: 'Year',
-                    5: 'Month',
-                    6: 'Month'
-                }
-            }
-        }
-    },
-
-    samsung: {
-        lengths: {
-            7: {
-                map: {
-                    2: 'Year',
-                    3: 'Month',
-                    4: 'Day'
-                }
-            }
-        }
-    },
-
-    panasonic: {
-        lengths: {
-            23: {
-                map: {
-                    6: 'Year',
-                    7: 'Month'
+            eaton: {
+                lengths: {
+                    3: {
+                        map: {
+                            1: 'Year',
+                            2: 'Week',
+                            3: 'Week'
+                        }
+                    }
                 }
             },
-            12: {
-                map: {
-                    2: 'Year',
-                    3: 'Month'
+            gigadevice: {
+                lengths: {
+                    6: {
+                        map: {
+                            3: 'Year',
+                            4: 'Year',
+                            5: 'Week',
+                            6: 'Week'
+                        }
+                    }
                 }
             },
-            4: {
-                map: {
-                    1: 'Year',
-                    2: 'Month'
-                }
-            }
-        }
-    },
-
-    bellwether: {
-        lengths: {
-            5: {
-                map: {
-                    1: 'Year',
-                    2: 'Month'
+            conquer: {
+                lengths: {
+                    9: {
+                        map: {
+                            4: 'Year',
+                            5: 'Month',
+                            6: 'Month'
+                        }
+                    },
+                    10: {
+                        map: {
+                            4: 'Year',
+                            5: 'Month',
+                            6: 'Month'
+                        }
+                    }
                 }
             },
-            9: {
-                map: {
-                    1: 'Year',
-                    2: 'Month'
+            samsung: {
+                lengths: {
+                    7: {
+                        map: {
+                            2: 'Year',
+                            3: 'Month',
+                            4: 'Day'
+                        }
+                    }
+                }
+            },
+            panasonic: {
+                lengths: {
+                    23: {
+                        map: {
+                            6: 'Year',
+                            7: 'Month'
+                        }
+                    },
+                    12: {
+                        map: {
+                            2: 'Year',
+                            3: 'Month'
+                        }
+                    },
+                    4: {
+                        map: {
+                            1: 'Year',
+                            2: 'Month'
+                        }
+                    }
+                }
+            },
+            bellwether: {
+                lengths: {
+                    5: {
+                        map: {
+                            1: 'Year',
+                            2: 'Month'
+                        }
+                    },
+                    9: {
+                        map: {
+                            1: 'Year',
+                            2: 'Month'
+                        }
+                    }
+                }
+            },
+            viking: {
+                lengths: {
+                    6: {
+                        map: {
+                            1: 'Year',
+                            2: 'Year',
+                            3: 'Month',
+                            4: 'Month',
+                            5: 'Day',
+                            6: 'Day'
+                        }
+                    }
+                }
+            },
+            unisonic: {
+                lengths: {
+                    4: {
+                        map: {
+                            1: 'Year',
+                            2: 'Month'
+                        }
+                    }
+                }
+            },
+            everlight: {
+                lengths: {
+                    19: {
+                        map: {
+                            2: 'Year',
+                            3: 'Year',
+                            4: 'Month',
+                            5: 'Month',
+                            6: 'Day',
+                            7: 'Day'
+                        }
+                    }
+                }
+            },
+            delta: {
+                lengths: {
+                    19: {
+                        map: {
+                            11: 'Year',
+                            12: 'Year',
+                            13: 'Week',
+                            14: 'Week'
+                        }
+                    }
                 }
             }
-        }
-    }
-};
-
+        };
 
         function showDecodingBoxesNew(dateCode, supplier) {
             const existingContainer = document.getElementById("decodingBoxes");
@@ -773,14 +910,14 @@ const decodingMap = {
             const supplierConfig = decodingMap[supplier];
             if (!supplierConfig) {
                 const message = document.createElement("p");
-                message.textContent = "אין מיפוי זמין להצגת מבנה הפענוח.";
+                message.textContent = translations[document.getElementById('language').value].noDecodingMap || "אין מיפוי זמין להצגת מבנה הפענוח.";
                 existingContainer.appendChild(message);
                 return;
             }
             const lengthConfig = supplierConfig.lengths[dateCode.length];
             if (!lengthConfig) {
                 const message = document.createElement("p");
-                message.textContent = `אין פענוח למספר תווים ${dateCode.length} עבור ספק זה.`;
+                message.textContent = translations[document.getElementById('language').value].noDecodingForLength || `אין פענוח למספר תווים ${dateCode.length} עבור ספק זה.`;
                 existingContainer.appendChild(message);
                 return;
             }
@@ -793,6 +930,7 @@ const decodingMap = {
                     <div style="font-size: 18px; font-weight: bold;">${char}</div>
                     <small style="font-size: 12px; color: gray;">${label}</small>
                 `;
+                box.setAttribute('data-label', label);
                 box.style.border = "1px solid black";
                 box.style.padding = "10px";
                 box.style.margin = "5px";
@@ -813,9 +951,12 @@ const decodingMap = {
             event.preventDefault();
             const supplier = document.getElementById('manufacturer').value;
             const dateCode = document.getElementById('dateCode').value.trim();
-            if (window.innerWidth >= 768) {
-                showDecodingBoxesNew(dateCode, supplier);
+            const language = document.getElementById('language').value;
+            if (!dateCode.match(/^[A-Za-z0-9*]+$/)) {
+                document.getElementById('result').innerText = translations[language].invalidCharacters;
+                return;
             }
+            showDecodingBoxesNew(dateCode, supplier);
             const result = decodeDate(supplier, dateCode);
             document.getElementById('result').innerHTML = result;
         });
@@ -825,6 +966,8 @@ const decodingMap = {
             const selectedLanguage = this.value;
             localStorage.setItem("selectedLanguage", selectedLanguage);
             updateLanguage(selectedLanguage);
+            const charCount = document.getElementById('dateCode').value.length;
+            document.getElementById('charCount').innerText = `${translations[selectedLanguage].charCount}${charCount}`;
         });
 
         document.addEventListener("DOMContentLoaded", function() {
@@ -832,6 +975,7 @@ const decodingMap = {
             const savedLanguage = localStorage.getItem("selectedLanguage") || "he";
             languageSelect.value = savedLanguage;
             updateLanguage(savedLanguage);
+            document.getElementById('charCount').innerText = `${translations[savedLanguage].charCount}0`;
             const selectedOption = languageSelect.options[languageSelect.selectedIndex];
             if (selectedOption) {
                 selectedOption.selected = true;
@@ -850,11 +994,12 @@ const decodingMap = {
             };
             const currentTranslations = translations[language];
             for (let key in elementsToTranslate) {
-                if (elementsToTranslate[key]) {
+                if (elementsToTranslate[key] && key !== 'charCount') {
                     elementsToTranslate[key].innerText = currentTranslations[key] || "";
                 }
             }
             document.body.style.direction = language === "he" || language === "ar" ? "rtl" : "ltr";
+            document.body.setAttribute("lang", language);
         }
 
         // Barcode scanning
@@ -863,37 +1008,52 @@ const decodingMap = {
         });
 
         document.getElementById('imageInput').addEventListener('change', function(event) {
+            const language = document.getElementById('language').value;
+            document.getElementById('result').innerText = translations[language].processing;
             const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = new Image();
-                    img.onload = function() {
-                        Quagga.decodeSingle({
-                            src: img.src,
-                            numOfWorkers: 0,
-                            inputStream: {
-                                size: 800
-                            },
-                            decoder: {
-                                readers: ["code_128_reader", "code_39_reader"]
-                            },
-                        }, function(result) {
-                            if (result && result.codeResult) {
-                                const barcode = result.codeResult.code;
-                                document.getElementById('dateCode').value = barcode;
-                                document.getElementById('result').innerText = `ברקוד מזוהה: ${barcode}`;
-                            } else {
-                                document.getElementById('result').innerText = "לא זוהה ברקוד. נסה שוב.";
-                            }
-                        });
-                    };
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
+            if (!file) {
+                document.getElementById('result').innerText = translations[language].noFileSelected;
+                return;
             }
+            if (!file.type.startsWith('image/')) {
+                document.getElementById('result').innerText = translations[language].invalidFileType;
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    Quagga.decodeSingle({
+                        src: img.src,
+                        numOfWorkers: 0,
+                        inputStream: {
+                            size: 800
+                        },
+                        decoder: {
+                            readers: ["code_128_reader", "code_39_reader"]
+                        },
+                    }, function(result) {
+                        if (result && result.codeResult) {
+                            const barcode = result.codeResult.code;
+                            document.getElementById('dateCode').value = barcode;
+                            document.getElementById('result').innerText = `${translations[language].barcodeDetected}: ${barcode}`;
+                            const charCount = barcode.length;
+                            document.getElementById('charCount').innerText = `${translations[language].charCount}${charCount}`;
+                        } else {
+                            document.getElementById('result').innerText = translations[language].barcodeNotDetected;
+                        }
+                    });
+                };
+                img.onerror = function() {
+                    document.getElementById('result').innerText = translations[language].imageLoadError;
+                };
+                img.src = e.target.result;
+            };
+            reader.onerror = function() {
+                document.getElementById('result').innerText = translations[language].fileReadError;
+            };
+            reader.readAsDataURL(file);
         });
     </script>
 </body>
 </html>
-
