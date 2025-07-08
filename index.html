@@ -432,8 +432,9 @@
                     const month = monthMap[monthCode] || 'unknown';
                     const day = dayMap[dayCode] || 'unknown';
                     result = (year !== 'unknown' && month !== 'unknown' && day !== 'unknown') 
-                        ? `${translations[language].result} ${day}-${month}-${year}` 
+                        ? `${translations[language].result} ${month}-${year}` 
                         : translations[language].invalidFormat.replace('{manufacturer}', 'SAMSUNG');
+
                 } else {
                     result = translations[language].invalidFormat.replace('{manufacturer}', 'SAMSUNG');
                 }
