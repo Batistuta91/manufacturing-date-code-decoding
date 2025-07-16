@@ -1038,48 +1038,70 @@
         }
     }
 };
+function showDecodingBoxesNew(dateCode, supplier) {
+    const existingContainer = document.getElementById("decodingBoxes");
+    existingContainer.innerHTML = "";
+    const supplierConfig = decodingMap[supplier];
+    if (!supplierConfig) {
+        const message = document.createElement("p");
+        message.textContent = translations[document.getElementById('language').value].noDecodingMap || "אין מיפוי זמין להצגת מבנה הפענוח.";
+        existingContainer.appendChild(message);
+        return;
+    }
+    let lengthConfig = supplierConfig.lengths[dateCode.length];
+    let map;
 
-        function showDecodingBoxesNew(dateCode, supplier) {
-            const existingContainer = document.getElementById("decodingBoxes");
-            existingContainer.innerHTML = "";
-            const supplierConfig = decodingMap[supplier];
-            if (!supplierConfig) {
-                const message = document.createElement("p");
-                message.textContent = translations[document.getElementById('language').value].noDecodingMap || "אין מיפוי זמין להצגת מבנה הפענוח.";
-                existingContainer.appendChild(message);
-                return;
-            }
-            const lengthConfig = supplierConfig.lengths[dateCode.length];
-            if (!lengthConfig) {
-                const message = document.createElement("p");
-                message.textContent = translations[document.getElementById('language').value].noDecodingForLength || `אין פענוח למספר תווים ${dateCode.length} עבור ספק זה.`;
-                existingContainer.appendChild(message);
-                return;
-            }
-            const map = lengthConfig.map;
-            for (let i = 1; i <= dateCode.length; i++) {
-                const char = dateCode[i - 1];
-                const label = map[i] || '';
-                const box = document.createElement("div");
-                box.innerHTML = `
-                    <div style="font-size: 18px; font-weight: bold;">${char}</div>
-                    <small style="font-size: 12px; color: gray;">${label}</small>
-                `;
-                box.setAttribute('data-label', label);
-                box.style.border = "1px solid black";
-                box.style.padding = "10px";
-                box.style.margin = "5px";
-                box.style.textAlign = "center";
-                box.style.width = "35px";
-                box.style.height = "40px";
-                box.style.display = "flex";
-                box.style.flexDirection = "column";
-                box.style.justifyContent = "center";
-                box.style.alignItems = "center";
-                box.style.backgroundColor = "#f9f9f9";
-                existingContainer.appendChild(box);
+    // טיפול בפורמטים מרובים (מערך)
+    if (Array.isArray(lengthConfig)) {
+        // זיהוי דינמי לפורמט המתאים (bourns דוג')
+        // פורמט 1: שנה(1) + יום בשנה (3), לדוג' 1197
+        // פורמט 2: שנה(2) + שבוע(2), לדוג' 2412
+        if (/^\d{4}$/.test(dateCode)) {
+            const firstMap = lengthConfig[0].map;
+            const secondMap = lengthConfig[1].map;
+            // בדוק האם זה יום בשנה או שבוע (בהתאם למפרש שלך)
+            if (parseInt(dateCode.substring(1, 4), 10) > 0 && parseInt(dateCode.substring(1, 4), 10) <= 366) {
+                map = firstMap;
+            } else {
+                map = secondMap;
             }
         }
+    } else if (lengthConfig) {
+        map = lengthConfig.map;
+    } else {
+        const message = document.createElement("p");
+        message.textContent = translations[document.getElementById('language').value].noDecodingForLength || `אין פענוח למספר תווים ${dateCode.length} עבור ספק זה.`;
+        existingContainer.appendChild(message);
+        return;
+    }
+
+    // הצגה גרפית
+    for (let i = 1; i <= dateCode.length; i++) {
+        const char = dateCode[i - 1];
+        const label = map && map[i] ? map[i] : '';
+        const box = document.createElement("div");
+        box.innerHTML = `
+            <div style="font-size: 18px; font-weight: bold;">${char}</div>
+            <small style="font-size: 12px; color: gray;">${label}</small>
+        `;
+        box.setAttribute('data-label', label);
+        box.style.border = "1px solid black";
+        box.style.padding = "10px";
+        box.style.margin = "5px";
+        box.style.textAlign = "center";
+        box.style.width = "35px";
+        box.style.height = "40px";
+        box.style.display = "flex";
+        box.style.flexDirection = "column";
+        box.style.justifyContent = "center";
+        box.style.alignItems = "center";
+        box.style.backgroundColor = "#f9f9f9";
+        existingContainer.appendChild(box);
+    }
+}
+
+
+        
 
         // Form submission
         document.getElementById('dateCodeForm').addEventListener('submit', function(event) {
