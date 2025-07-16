@@ -673,27 +673,38 @@
                 } else {
                     result = translations[language].invalidFormat.replace('{manufacturer}', 'UNISONIC');
                 }
-            } else if (manufacturer === 'delta') {
-                if (dateCode.length === 19) {
-                    const yearCode = dateCode.substring(10, 12);
-                    const weekCode = dateCode.substring(12, 14);
-                    const year = parseInt(yearCode, 10) + 2000;
-                    const week = parseInt(weekCode, 10);
-                    if (week >= 1 && week <= 52 && !isNaN(year)) {
-                        const month = Math.min(Math.ceil(week / 4), 12);
-                        const monthPadded = String(month).padStart(2, '0');
-                        result = `${translations[language].result} ${monthPadded}-${year}`;
-                    } else {
-                        result = translations[language].invalidFormat.replace('{manufacturer}', 'DELTA');
-                    }
-                } else {
-                    result = translations[language].invalidFormat.replace('{manufacturer}', 'DELTA');
-                }
-            } else {
-                result = translations[language].invalidFormat.replace('{manufacturer}', manufacturer.toUpperCase());
-            }
-            return result;
+           } else if (manufacturer === 'delta') {
+    // פורמט 19 תווים
+    if (dateCode.length === 19) {
+        const yearCode = dateCode.substring(10, 12);
+        const weekCode = dateCode.substring(12, 14);
+        const year = parseInt(yearCode, 10) + 2000;
+        const week = parseInt(weekCode, 10);
+        if (week >= 1 && week <= 52 && !isNaN(year)) {
+            const month = Math.min(Math.ceil(week / 4), 12);
+            const monthPadded = String(month).padStart(2, '0');
+            result = `${translations[language].result} ${monthPadded}-${year}`;
+        } else {
+            result = translations[language].invalidFormat.replace('{manufacturer}', 'DELTA');
         }
+    } 
+    // פורמט Medical Power Supply - 11 תווים (MMMXYMDSSSS)
+    else if (dateCode.length === 11) {
+        // KOH-D27700XP  לדוג'
+        const yearCode = dateCode.charAt(4);   // Y
+        const monthCode = dateCode.charAt(5);  // M
+        const year = '202' + yearCode;         // 2022 וכדומה
+        const month = monthCode.padStart(2, '0');
+        result = `${translations[language].result} ${month}-${year}`;
+    } 
+    else {
+        result = translations[language].invalidFormat.replace('{manufacturer}', 'DELTA');
+    }
+} else {
+    result = translations[language].invalidFormat.replace('{manufacturer}', manufacturer.toUpperCase());
+}
+return result;
+}
 
         // Original decoding functions
         function decodeEaton(dateCode) {
@@ -958,18 +969,24 @@
                     }
                 }
             },
-            delta: {
-                lengths: {
-                    19: {
-                        map: {
-                            11: 'Year',
-                            12: 'Year',
-                            13: 'Week',
-                            14: 'Week'
-                        }
-                    }
-                }
-            },
+           delta: {
+    lengths: {
+        19: {
+            map: {
+                11: 'Year',
+                12: 'Year',
+                13: 'Week',
+                14: 'Week'
+            }
+        },
+        11: { // פורמט Medical Power Supply (MMMXYMDSSSS)
+            map: {
+                5: 'Year',
+                6: 'Month'
+            }
+        }
+    }
+},
         bourns: {
         lengths: {
             5: {
