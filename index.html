@@ -969,8 +969,75 @@
                         }
                     }
                 }
-            }
-        };
+            },
+        bourns: {
+        lengths: {
+            5: {
+                map: {
+                    1: 'Plant',
+                    2: 'Year',
+                    3: 'Year',
+                    4: 'Week',
+                    5: 'Week'
+                }
+            },
+            8: {
+                map: {
+                    1: 'Year',
+                    2: 'Year',
+                    3: 'Year',
+                    4: 'Year',
+                    5: 'Month',
+                    6: 'Month',
+                    7: 'Day',
+                    8: 'Day'
+                }
+            },
+            6: {
+                map: {
+                    1: 'Year',
+                    2: 'Year',
+                    3: 'Month',
+                    4: 'Month',
+                    5: 'Day',
+                    6: 'Day'
+                }
+            },
+            2: {
+                map: {
+                    1: 'Year',
+                    2: 'WeekLetter'
+                }
+            },
+            3: {
+                map: {
+                    1: 'Year',
+                    2: 'Week',
+                    3: 'Week'
+                }
+            },
+            // שים לב – כאן מערך עם 2 פורמטים עבור 4 תווים
+            4: [
+                { // פורמט 1: שנה(1) + יום בשנה (3), לדוג' 1197
+                    map: {
+                        1: 'Year',
+                        2: 'DayOfYear',
+                        3: 'DayOfYear',
+                        4: 'DayOfYear'
+                    }
+                },
+                { // פורמט 2: שנה(2) + שבוע(2), לדוג' 2132
+                    map: {
+                        1: 'Year',
+                        2: 'Year',
+                        3: 'Week',
+                        4: 'Week'
+                    }
+                }
+            ]
+        }
+    }
+};
 
         function showDecodingBoxesNew(dateCode, supplier) {
             const existingContainer = document.getElementById("decodingBoxes");
