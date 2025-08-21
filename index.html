@@ -581,17 +581,17 @@
                 const month = monthMap[monthCode];
                 const day = dayMap[dayCode];
                 result = (year && month && day) ? `${translations[language].result} DIP SWITCH AND OPTO SWITCH ${day}-${month}-${year}` : translations[language].invalidFormat.replace('{manufacturer}', 'OMRON');
-            } else if (dateCode.length === 4) { // OMRON 4-digit packaging code
-                const yearCode = dateCode.charAt(0);
-                const monthCode = dateCode.charAt(1).toLowerCase(); // Handle x, y, z
-                const year = `202${yearCode}`; // Assumes years in the 2020s
+            } else if (dateCode.length === 4) { // New DDMY format
+                const monthCode = dateCode.charAt(2).toLowerCase();
+                const yearCode = dateCode.charAt(3);
+                const year = 2020 + parseInt(yearCode, 10);
                 const monthMap = {
                     '1': '01', '2': '02', '3': '03', '4': '04', '5': '05',
                     '6': '06', '7': '07', '8': '08', '9': '09',
                     'x': '10', 'y': '11', 'z': '12'
                 };
                 const month = monthMap[monthCode];
-                if (month && !isNaN(parseInt(yearCode))) {
+                if (month && !isNaN(year)) {
                     result = `${translations[language].result} ${month}-${year}`;
                 } else {
                     result = translations[language].invalidFormat.replace('{manufacturer}', 'OMRON');
@@ -1246,4 +1246,5 @@ function showDecodingBoxesNew(dateCode, supplier) {
     </script>
 </body>
 </html>
+
 
