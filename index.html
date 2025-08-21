@@ -550,65 +550,80 @@
                 } else {
                     result = translations[language].invalidFormat.replace('{manufacturer}', 'EVERLIGHT');
                 }
-            } else if (manufacturer === 'omron') {
-                if (dateCode.length === 2) {
-                    const monthCode = dateCode.charAt(0);
-                    const yearCode = dateCode.charAt(1);
-                    const monthMap = {
-                        '1': '01', '2': '02', '3': '03', '4': '04', '5': '05', '6': '06',
-                        '7': '07', '8': '08', '9': '09', 'X': '10', 'Y': '11', 'Z': '12'
-                    };
-                    const year = `202${yearCode}`;
-                    const month = monthMap[monthCode];
-                    result = (year && month) ? `${translations[language].result} ${month}-${year}` : translations[language].invalidFormat.replace('{manufacturer}', 'OMRON');
-                } else if (dateCode.length === 3) {
-                    const dayCode = dateCode.charAt(0);
-                    const monthCode = dateCode.charAt(1);
-                    const yearCode = dateCode.charAt(2);
-                    const dayMap = {
-                        '1': '01', '2': '02', '3': '03', '4': '04', '5': '05', '6': '06',
-                        '7': '07', '8': '08', '9': '09',
-                        'A': '10', 'B': '11', 'C': '12', 'D': '13', 'E': '14', 'F': '15',
-                        'G': '16', 'H': '17', 'J': '18', 'K': '19', 'L': '20', 'M': '21',
-                        'N': '22', 'P': '23', 'R': '24', 'S': '25', 'T': '26', 'U': '27',
-                        'V': '28', 'W': '29', 'X': '30', 'Y': '31'
-                    };
-                    const monthMap = {
-                        '1': '01', '2': '02', '3': '03', '4': '04', '5': '05', '6': '06',
-                        '7': '07', '8': '08', '9': '09', 'X': '10', 'Y': '11', 'Z': '12'
-                    };
-                    const year = `202${yearCode}`;
-                    const month = monthMap[monthCode];
-                    const day = dayMap[dayCode];
-                    result = (year && month && day) ? `${translations[language].result} DIP SWITCH AND OPTO SWITCH ${day}-${month}-${year}` : translations[language].invalidFormat.replace('{manufacturer}', 'OMRON');
-                } else if ([6, 7].includes(dateCode.length)) {
-                    const day = dateCode.substring(0, 2);
-                    const monthCode = dateCode.charAt(2);
-                    const yearCode = dateCode.charAt(3);
-                    const monthMap = {
-                        '1': '01', '2': '02', '3': '03', '4': '04', '5': '05', '6': '06',
-                        '7': '07', '8': '08', '9': '09', 'X': '10', 'Y': '11', 'Z': '12'
-                    };
-                    const year = 2020 + parseInt(yearCode, 10);
-                    const month = monthMap[monthCode];
-                    result = (year && month && parseInt(day) >= 1 && parseInt(day) <= 31) ? `${translations[language].result} ${day}-${month}-${year}` : translations[language].invalidFormat.replace('{manufacturer}', 'OMRON');
-                } else if (dateCode.length === 12) {
-                    const yearCode = dateCode.charAt(1);
-                    const monthCode = dateCode.charAt(2);
-                    const yearMap = {
-                        '1': 2021, '2': 2022, '3': 2023, '4': 2024, '5': 2025,
-                        '6': 2026, '7': '2027', '8': '2028', '9': 2029
-                    };
-                    const monthMap = {
-                        '1': '01', '2': '02', '3': '03', '4': '04', '5': '05', '6': '06',
-                        '7': '07', '8': '08', '9': '09', 'O': '10', 'N': '11', 'D': '12'
-                    };
-                    const year = yearMap[yearCode];
-                    const month = monthMap[monthCode];
-                    result = (year && month) ? `${translations[language].result} ${month}/${year}` : translations[language].invalidFormat.replace('{manufacturer}', 'OMRON');
+           } else if (manufacturer === 'omron') {
+            if (dateCode.length === 2) {
+                const monthCode = dateCode.charAt(0);
+                const yearCode = dateCode.charAt(1);
+                const monthMap = {
+                    '1': '01', '2': '02', '3': '03', '4': '04', '5': '05', '6': '06',
+                    '7': '07', '8': '08', '9': '09', 'X': '10', 'Y': '11', 'Z': '12'
+                };
+                const year = `202${yearCode}`;
+                const month = monthMap[monthCode];
+                result = (year && month) ? `${translations[language].result} ${month}-${year}` : translations[language].invalidFormat.replace('{manufacturer}', 'OMRON');
+            } else if (dateCode.length === 3) {
+                const dayCode = dateCode.charAt(0);
+                const monthCode = dateCode.charAt(1);
+                const yearCode = dateCode.charAt(2);
+                const dayMap = {
+                    '1': '01', '2': '02', '3': '03', '4': '04', '5': '05', '6': '06',
+                    '7': '07', '8': '08', '9': '09',
+                    'A': '10', 'B': '11', 'C': '12', 'D': '13', 'E': '14', 'F': '15',
+                    'G': '16', 'H': '17', 'J': '18', 'K': '19', 'L': '20', 'M': '21',
+                    'N': '22', 'P': '23', 'R': '24', 'S': '25', 'T': '26', 'U': '27',
+                    'V': '28', 'W': '29', 'X': '30', 'Y': '31'
+                };
+                const monthMap = {
+                    '1': '01', '2': '02', '3': '03', '4': '04', '5': '05', '6': '06',
+                    '7': '07', '8': '08', '9': '09', 'X': '10', 'Y': '11', 'Z': '12'
+                };
+                const year = `202${yearCode}`;
+                const month = monthMap[monthCode];
+                const day = dayMap[dayCode];
+                result = (year && month && day) ? `${translations[language].result} DIP SWITCH AND OPTO SWITCH ${day}-${month}-${year}` : translations[language].invalidFormat.replace('{manufacturer}', 'OMRON');
+            } else if (dateCode.length === 4) { // OMRON 4-digit packaging code
+                const yearCode = dateCode.charAt(0);
+                const monthCode = dateCode.charAt(1).toLowerCase(); // Handle x, y, z
+                const year = `202${yearCode}`; // Assumes years in the 2020s
+                const monthMap = {
+                    '1': '01', '2': '02', '3': '03', '4': '04', '5': '05',
+                    '6': '06', '7': '07', '8': '08', '9': '09',
+                    'x': '10', 'y': '11', 'z': '12'
+                };
+                const month = monthMap[monthCode];
+                if (month && !isNaN(parseInt(yearCode))) {
+                    result = `${translations[language].result} ${month}-${year}`;
                 } else {
                     result = translations[language].invalidFormat.replace('{manufacturer}', 'OMRON');
                 }
+            } else if ([6, 7].includes(dateCode.length)) {
+                const day = dateCode.substring(0, 2);
+                const monthCode = dateCode.charAt(2);
+                const yearCode = dateCode.charAt(3);
+                const monthMap = {
+                    '1': '01', '2': '02', '3': '03', '4': '04', '5': '05', '6': '06',
+                    '7': '07', '8': '08', '9': '09', 'X': '10', 'Y': '11', 'Z': '12'
+                };
+                const year = 2020 + parseInt(yearCode, 10);
+                const month = monthMap[monthCode];
+                result = (year && month && parseInt(day) >= 1 && parseInt(day) <= 31) ? `${translations[language].result} ${day}-${month}-${year}` : translations[language].invalidFormat.replace('{manufacturer}', 'OMRON');
+            } else if (dateCode.length === 12) {
+                const yearCode = dateCode.charAt(1);
+                const monthCode = dateCode.charAt(2);
+                const yearMap = {
+                    '1': 2021, '2': 2022, '3': 2023, '4': 2024, '5': 2025,
+                    '6': 2026, '7': '2027', '8': '2028', '9': 2029
+                };
+                const monthMap = {
+                    '1': '01', '2': '02', '3': '03', '4': '04', '5': '05', '6': '06',
+                    '7': '07', '8': '08', '9': '09', 'O': '10', 'N': '11', 'D': '12'
+                };
+                const year = yearMap[yearCode];
+                const month = monthMap[monthCode];
+                result = (year && month) ? `${translations[language].result} ${month}/${year}` : translations[language].invalidFormat.replace('{manufacturer}', 'OMRON');
+            } else {
+                result = translations[language].invalidFormat.replace('{manufacturer}', 'OMRON');
+            }
             } else if (manufacturer === 'hitano') {
                 const decodedDate = decodeHitano(dateCode);
                 result = (decodedDate && decodedDate.month && decodedDate.day) 
@@ -1231,3 +1246,4 @@ function showDecodingBoxesNew(dateCode, supplier) {
     </script>
 </body>
 </html>
+
