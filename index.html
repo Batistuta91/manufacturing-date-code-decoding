@@ -1140,20 +1140,20 @@ function showDecodingBoxesNew(dateCode, supplier) {
 
         
 
-        // Form submission
-        document.getElementById('dateCodeForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const supplier = document.getElementById('manufacturer').value;
-            const dateCode = document.getElementById('dateCode').value.trim();
-            const language = document.getElementById('language').value;
-            if (!dateCode.match(/^[A-Za-z0-9*]+$/)) {
-                document.getElementById('result').innerText = translations[language].invalidCharacters;
-                return;
-            }
-            showDecodingBoxesNew(dateCode, supplier);
-            const result = decodeDate(supplier, dateCode);
-            document.getElementById('result').innerHTML = result;
-        });
+       // Form submission
+document.getElementById('dateCodeForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const supplier = document.getElementById('manufacturer').value;
+    const dateCode = document.getElementById('dateCode').value.trim();
+    const language = document.getElementById('language').value;
+    if (!dateCode.match(/^[A-Za-z0-9*\-]+$/)) {
+        document.getElementById('result').innerText = translations[language].invalidCharacters;
+        return;
+    }
+    showDecodingBoxesNew(dateCode, supplier);
+    const result = decodeDate(supplier, dateCode);
+    document.getElementById('result').innerHTML = result;
+});
 
         // Language handling
         document.getElementById("language").addEventListener("change", function() {
@@ -1251,6 +1251,7 @@ function showDecodingBoxesNew(dateCode, supplier) {
     </script>
 </body>
 </html>
+
 
 
 
