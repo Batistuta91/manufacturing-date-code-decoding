@@ -629,15 +629,14 @@
                 result = (decodedDate && decodedDate.month && decodedDate.day) 
                     ? `${translations[language].result} ${decodedDate.day}-${decodedDate.month}-${decodedDate.year}` 
                     : translations[language].invalidFormat.replace('{manufacturer}', 'HITANO');
-        } else if (manufacturer === 'conquer') {
-    if (dateCode.length === 9) {
-        const yearCode = dateCode.charAt(3);
-        const monthCode = dateCode.substring(4, 6);
-        const year = 2020 + parseInt(yearCode, 10);
-        const month = monthCode.padStart(2, '0');
-        result = (parseInt(month, 10) >= 1 && parseInt(month, 10) <= 12) 
-            ? `${translations[language].result} ${month}-${year}` 
-            : translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
+        } else if (dateCode.length === 10 && dateCode.charAt(0) === 'S') {
+                    const yearCode = dateCode.charAt(4);
+                    const month = dateCode.substring(5, 7);
+                    const day = dateCode.substring(7, 9);
+                    const year = 2020 + parseInt(yearCode, 10);
+                    result = (parseInt(month, 10) >= 1 && parseInt(month, 10) <= 12 && parseInt(day, 10) >= 1 && parseInt(day, 10) <= 31) 
+                        ? `${translations[language].result} ${day}-${month}-${year}` 
+                        : translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
     } else if (dateCode.length === 31 && dateCode.includes('*')) {
         const datePart = dateCode.split('*').pop();
         if (datePart && datePart.length === 6) {
@@ -1252,6 +1251,7 @@ document.getElementById('dateCodeForm').addEventListener('submit', function(even
     </script>
 </body>
 </html>
+
 
 
 
