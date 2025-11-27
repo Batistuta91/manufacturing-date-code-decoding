@@ -629,45 +629,46 @@
                 result = (decodedDate && decodedDate.month && decodedDate.day) 
                     ? `${translations[language].result} ${decodedDate.day}-${decodedDate.month}-${decodedDate.year}` 
                     : translations[language].invalidFormat.replace('{manufacturer}', 'HITANO');
-            } else if (manufacturer === 'conquer') {
-                if (dateCode.length === 9) {
-                    const yearCode = dateCode.charAt(3);
-                    const monthCode = dateCode.substring(4, 6);
-                    const year = 2020 + parseInt(yearCode);
-                    const month = monthCode.padStart(2, '0');
-                    result = (parseInt(month) >= 1 && parseInt(month) <= 12) 
-                        ? `${translations[language].result} ${month}-${year}` 
-                        : translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
-                } else if (dateCode.length === 31 && dateCode.includes('*')) {
-                    const datePart = dateCode.split('*').pop();
-                    if (datePart && datePart.length === 6) {
-                        const year = '20' + datePart.substring(0, 2);
-                        const month = datePart.substring(2, 4);
-                        const day = datePart.substring(4, 6);
-                        result = (parseInt(month) >= 1 && parseInt(month) <= 12 && parseInt(day) >= 1 && parseInt(day) <= 31) 
-                            ? `${translations[language].result} ${day}-${month}-${year}` 
-                            : translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
-                    } else {
-                        result = translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
-                    }
-                } else if (dateCode.length === 10 && dateCode.startsWith('S')) {
-                    const year = '20' + dateCode.substring(4, 6);
-                    const month = dateCode.substring(6, 8);
-                    const day = dateCode.substring(8, 10);
-                    result = (parseInt(month) >= 1 && parseInt(month) <= 12 && parseInt(day) >= 1 && parseInt(day) <= 31) 
-                        ? `${translations[language].result} ${day}-${month}-${year}` 
-                        : translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
-                } else if (dateCode.length === 10 && /^[A-Z0-9]{3}[0-9]{7}$/.test(dateCode)) {
-                    const yearCode = dateCode.charAt(3);
-                    const monthCode = dateCode.substring(4, 6);
-                    const year = 2020 + parseInt(yearCode);
-                    const month = monthCode.padStart(2, '0');
-                    result = (parseInt(month) >= 1 && parseInt(month) <= 12) 
-                        ? `${translations[language].result} ${month}-${year}` 
-                        : translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
-                } else {
-                    result = translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
-                }
+          } else if (manufacturer === 'conquer') {
+    if (dateCode.length === 9) {
+        const yearCode = dateCode.charAt(3);
+        const monthCode = dateCode.substring(4, 6);
+        const year = 2020 + parseInt(yearCode);
+        const month = monthCode.padStart(2, '0');
+        result = (parseInt(month) >= 1 && parseInt(month) <= 12) 
+            ? `${translations[language].result} ${month}-${year}` 
+            : translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
+    } else if (dateCode.length === 31 && dateCode.includes('*')) {
+        const datePart = dateCode.split('*').pop();
+        if (datePart && datePart.length === 6) {
+            const year = '20' + datePart.substring(0, 2);
+            const month = datePart.substring(2, 4);
+            const day = datePart.substring(4, 6);
+            result = (parseInt(month) >= 1 && parseInt(month) <= 12 && parseInt(day) >= 1 && parseInt(day) <= 31) 
+                ? `${translations[language].result} ${day}-${month}-${year}` 
+                : translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
+        } else {
+            result = translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
+        }
+    } else if (dateCode.length === 10 && dateCode.startsWith('S')) {
+        const yearCode = dateCode.charAt(4);
+        const month = dateCode.substring(5, 7);
+        const day = dateCode.substring(7, 9);
+        const year = 2020 + parseInt(yearCode);
+        result = (parseInt(month) >= 1 && parseInt(month) <= 12 && parseInt(day) >= 1 && parseInt(day) <= 31) 
+            ? `${translations[language].result} ${day}-${month}-${year}` 
+            : translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
+    } else if (dateCode.length === 10 && /^[A-Z0-9]{3}[0-9]{7}$/.test(dateCode)) {
+        const yearCode = dateCode.charAt(3);
+        const monthCode = dateCode.substring(4, 6);
+        const year = 2020 + parseInt(yearCode);
+        const month = monthCode.padStart(2, '0');
+        result = (parseInt(month) >= 1 && parseInt(month) <= 12) 
+            ? `${translations[language].result} ${month}-${year}` 
+            : translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
+    } else {
+        result = translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
+    }
             } else if (manufacturer === 'unisonic') {
                 if (dateCode.length === 4) {
                     const yearCode = dateCode.charAt(0);
@@ -1251,6 +1252,7 @@ document.getElementById('dateCodeForm').addEventListener('submit', function(even
     </script>
 </body>
 </html>
+
 
 
 
