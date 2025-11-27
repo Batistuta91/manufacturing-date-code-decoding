@@ -651,22 +651,19 @@
         } else {
             result = translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
         }
-    } else if (dateCode.length === 10 && dateCode.startsWith('S')) {
-        const yearCode = dateCode.charAt(4);
-        const month = dateCode.substring(5, 7);
-        const day = dateCode.substring(7, 9);
-        const year = 2020 + parseInt(yearCode);
-        result = (parseInt(month) >= 1 && parseInt(month) <= 12 && parseInt(day) >= 1 && parseInt(day) <= 31) 
-            ? `${translations[language].result} ${day}-${month}-${year}` 
-            : translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
-    } else if (dateCode.length === 10 && /^[A-Z0-9]{3}[0-9]{7}$/.test(dateCode)) {
+    } else if (dateCode.length === 10) {
+        // פורמט: 3 תווים (קידומת) + 1 תו שנה + 2 תווים חודש + 2 תווים יום + 2 תווים נוספים
+        // דוגמה: SET5100620 = SET + 5(2025) + 10(אוקטובר) + 06(יום 6) + 20
         const yearCode = dateCode.charAt(3);
-        const monthCode = dateCode.substring(4, 6);
+        const month = dateCode.substring(4, 6);
+        const day = dateCode.substring(6, 8);
         const year = 2020 + parseInt(yearCode);
-        const month = monthCode.padStart(2, '0');
-        result = (parseInt(month) >= 1 && parseInt(month) <= 12) 
-            ? `${translations[language].result} ${month}-${year}` 
-            : translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
+        
+        if (parseInt(month) >= 1 && parseInt(month) <= 12 && parseInt(day) >= 1 && parseInt(day) <= 31) {
+            result = `${translations[language].result} ${day}-${month}-${year}`;
+        } else {
+            result = translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
+        }
     } else {
         result = translations[language].invalidFormat.replace('{manufacturer}', 'CONQUER');
     }
@@ -1253,6 +1250,7 @@ document.getElementById('dateCodeForm').addEventListener('submit', function(even
     </script>
 </body>
 </html>
+
 
 
 
