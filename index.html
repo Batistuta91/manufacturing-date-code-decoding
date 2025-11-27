@@ -773,15 +773,13 @@ return result;
             const monthMap = {
                 'A': '01', 'B': '02', 'C': '03', 'D': '04', 'E': '05',
                 'F': '06', 'G': '07', 'H': '08', 'I': '09', 'J': '10',
-                'K': '11', 'L': '12', '1': '01', '2': '02', '3': '03', 
-                '4': '04', '5': '05', '6': '06', '7': '07', '8': '08', 
-                '9': '09', 'O': '10', 'N': '11', 'D': '12'
+                'K': '11', 'L': '12'
             };
             let year, month, day;
             if (dateCode.length === 11) {
                 year = 2000 + parseInt(dateCode.substring(4, 6), 10);
-                const monthCode = dateCode.charAt(6);
-                month = monthMap[monthCode] || monthCode.padStart(2, '0');
+                const monthCode = dateCode.charAt(6).toUpperCase();
+                month = monthMap[monthCode];
                 day = null; // אין יום בפורמט הזה
             } else if (dateCode.length === 12) {
                 year = 2000 + parseInt(dateCode.substring(4, 6), 10);
@@ -1253,6 +1251,7 @@ function showDecodingBoxesNew(dateCode, supplier) {
     </script>
 </body>
 </html>
+
 
 
 
