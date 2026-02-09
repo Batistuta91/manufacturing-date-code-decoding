@@ -198,13 +198,19 @@
 </head>
 <body>
     <h1>מפענח תאריך ייצור</h1>
-    <select id="language" aria-label="Select Language">
-        <option value="he">עברית</option>
-        <option value="en">English</option>
-        <option value="ar">العربية</option>
-        <option value="fr">Français</option>
-        <option value="es">Español</option>
-    </select>
+  <select id="language" aria-label="Select Language">
+    <option value="he">עברית</option>
+    <option value="en">English</option>
+    <option value="ar">العربية</option>
+    <option value="fr">Français</option>
+    <option value="es">Español</option>
+    <option value="de">Deutsch</option>
+    <option value="it">Italiano</option>
+    <option value="pt">Português</option>
+    <option value="ru">Русский</option>
+    <option value="zh">中文</option>
+</select>
+
 
     <form id="dateCodeForm">
         <label for="manufacturer">בחר יצרן:</label>
@@ -240,102 +246,198 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
     <script>
         const translations = {
-            he: {
-                title: "מפענח תאריך ייצור",
-                selectManufacturer: "בחר יצרן:",
-                enterDateCode: "הכנס קוד תאריך:",
-                decodeButton: "פענח",
-                scanBarcodeButton: "סרוק ברקוד",
-                charCount: "מספר התווים: ",
-                result: "תוצאה:",
-                decodingBoxes: "פענוח קוד:",
-                invalidFormat: "פורמט תאריך לא חוקי עבור {manufacturer}.",
-                invalidCharacters: "קוד תאריך מכיל תווים לא חוקיים.",
-                noFileSelected: "לא נבחר קובץ.",
-                invalidFileType: "סוג קובץ לא תקין. אנא בחר תמונה.",
-                barcodeDetected: "ברקוד מזוהה",
-                barcodeNotDetected: "לא זוהה ברקוד. נסה שוב.",
-                imageLoadError: "שגיאה בטעינת התמונה.",
-                fileReadError: "שגיאה בקריאת הקובץ.",
-                processing: "מעבד תמונה..."
-            },
-            en: {
-                title: "Production Date Decoder",
-                selectManufacturer: "Select Manufacturer:",
-                enterDateCode: "Enter Date Code:",
-                decodeButton: "Decode",
-                scanBarcodeButton: "Scan Barcode",
-                charCount: "Character Count: ",
-                result: "Result:",
-                decodingBoxes: "Decoding Code:",
-                invalidFormat: "Invalid date format for {manufacturer}.",
-                invalidCharacters: "Date code contains invalid characters.",
-                noFileSelected: "No file selected.",
-                invalidFileType: "Invalid file type. Please select an image.",
-                barcodeDetected: "Barcode detected",
-                barcodeNotDetected: "No barcode detected. Try again.",
-                imageLoadError: "Error loading image.",
-                fileReadError: "Error reading file.",
-                processing: "Processing image..."
-            },
-            ar: {
-                title: "مُفسر تاريخ الإنتاج",
-                selectManufacturer: "اختر الشركة المصنعة:",
-                enterDateCode: "أدخل رمز التاريخ:",
-                decodeButton: "فك الترميز",
-                scanBarcodeButton: "مسح الباركود",
-                charCount: "عدد الأحرف: ",
-                result: "النتيجة:",
-                decodingBoxes: "تفكيك الكود:",
-                invalidFormat: "تنسيق التاريخ غير صالح لـ {manufacturer}.",
-                invalidCharacters: "رمز التاريخ يحتوي على أحرف غير صالحة.",
-                noFileSelected: "لم يتم اختيار ملف.",
-                invalidFileType: "نوع الملف غير صالح. يرجى اختيار صورة.",
-                barcodeDetected: "تم اكتشاف الباركود",
-                barcodeNotDetected: "لم يتم اكتشاف الباركود. حاول مرة أخرى.",
-                imageLoadError: "خطأ في تحميل الصورة.",
-                fileReadError: "خطأ في قراءة الملف.",
-                processing: "جارٍ معالجة الصورة..."
-            },
-            fr: {
-                title: "Décodeur de Date de Production",
-                selectManufacturer: "Sélectionner le fabricant:",
-                enterDateCode: "Entrez le code de date:",
-                decodeButton: "Décoder",
-                scanBarcodeButton: "Scanner le code-barres",
-                charCount: "Nombre de caractères: ",
-                result: "Résultat:",
-                decodingBoxes: "Décodage du code:",
-                invalidFormat: "Format de date invalide pour {manufacturer}.",
-                invalidCharacters: "Le code de date contient des caractères invalides.",
-                noFileSelected: "Aucun fichier sélectionné.",
-                invalidFileType: "Type de fichier invalide. Veuillez sélectionner une image.",
-                barcodeDetected: "Code-barres détecté",
-                barcodeNotDetected: "Aucun code-barres détecté. Réessayez.",
-                imageLoadError: "Erreur de chargement de l'image.",
-                fileReadError: "Erreur de lecture du fichier.",
-                processing: "Traitement de l'image..."
-            },
-            es: {
-                title: "Descodificador de Fecha de Producción",
-                selectManufacturer: "Seleccionar fabricante:",
-                enterDateCode: "Introducir código de fecha:",
-                decodeButton: "Descifrar",
-                scanBarcodeButton: "Escanear código de barras",
-                charCount: "Número de caracteres: ",
-                result: "Resultado:",
-                decodingBoxes: "Descodificación del código:",
-                invalidFormat: "Formato de fecha inválido para {manufacturer}.",
-                invalidCharacters: "El código de fecha contiene caracteres inválidos.",
-                noFileSelected: "No se seleccionó ningún archivo.",
-                invalidFileType: "Tipo de archivo inválido. Por favor, selecciona una imagen.",
-                barcodeDetected: "Código de barras detectado",
-                barcodeNotDetected: "No se detectó ningún código de barras. Intenta de nuevo.",
-                imageLoadError: "Error al cargar la imagen.",
-                fileReadError: "Error al leer el archivo.",
-                processing: "Procesando imagen..."
-            }
-        };
+    he: {
+        title: "מפענח תאריך ייצור",
+        selectManufacturer: "בחר יצרן:",
+        enterDateCode: "הכנס קוד תאריך:",
+        decodeButton: "פענח",
+        scanBarcodeButton: "סרוק ברקוד",
+        charCount: "מספר התווים: ",
+        result: "תוצאה:",
+        decodingBoxes: "פענוח קוד:",
+        invalidFormat: "פורמט תאריך לא חוקי עבור {manufacturer}.",
+        invalidCharacters: "קוד תאריך מכיל תווים לא חוקיים.",
+        noFileSelected: "לא נבחר קובץ.",
+        invalidFileType: "סוג קובץ לא תקין. אנא בחר תמונה.",
+        barcodeDetected: "ברקוד מזוהה",
+        barcodeNotDetected: "לא זוהה ברקוד. נסה שוב.",
+        imageLoadError: "שגיאה בטעינת התמונה.",
+        fileReadError: "שגיאה בקריאת הקובץ.",
+        processing: "מעבד תמונה..."
+    },
+    en: {
+        title: "Production Date Decoder",
+        selectManufacturer: "Select Manufacturer:",
+        enterDateCode: "Enter Date Code:",
+        decodeButton: "Decode",
+        scanBarcodeButton: "Scan Barcode",
+        charCount: "Character Count: ",
+        result: "Result:",
+        decodingBoxes: "Decoding Code:",
+        invalidFormat: "Invalid date format for {manufacturer}.",
+        invalidCharacters: "Date code contains invalid characters.",
+        noFileSelected: "No file selected.",
+        invalidFileType: "Invalid file type. Please select an image.",
+        barcodeDetected: "Barcode detected",
+        barcodeNotDetected: "No barcode detected. Try again.",
+        imageLoadError: "Error loading image.",
+        fileReadError: "Error reading file.",
+        processing: "Processing image..."
+    },
+    ar: {
+        title: "مُفسر تاريخ الإنتاج",
+        selectManufacturer: "اختر الشركة المصنعة:",
+        enterDateCode: "أدخل رمز التاريخ:",
+        decodeButton: "فك الترميز",
+        scanBarcodeButton: "مسح الباركود",
+        charCount: "عدد الأحرف: ",
+        result: "النتيجة:",
+        decodingBoxes: "تفكيك الكود:",
+        invalidFormat: "تنسيق التاريخ غير صالح لـ {manufacturer}.",
+        invalidCharacters: "رمز التاريخ يحتوي على أحرف غير صالحة.",
+        noFileSelected: "لم يتم اختيار ملف.",
+        invalidFileType: "نوع الملف غير صالح. يرجى اختيار صورة.",
+        barcodeDetected: "تم اكتشاف الباركود",
+        barcodeNotDetected: "لم يتم اكتشاف الباركود. حاول مرة أخرى.",
+        imageLoadError: "خطأ في تحميل الصورة.",
+        fileReadError: "خطأ في قراءة الملف.",
+        processing: "جارٍ معالجة الصورة..."
+    },
+    fr: {
+        title: "Décodeur de Date de Production",
+        selectManufacturer: "Sélectionner le fabricant:",
+        enterDateCode: "Entrez le code de date:",
+        decodeButton: "Décoder",
+        scanBarcodeButton: "Scanner le code-barres",
+        charCount: "Nombre de caractères: ",
+        result: "Résultat:",
+        decodingBoxes: "Décodage du code:",
+        invalidFormat: "Format de date invalide pour {manufacturer}.",
+        invalidCharacters: "Le code de date contient des caractères invalides.",
+        noFileSelected: "Aucun fichier sélectionné.",
+        invalidFileType: "Type de fichier invalide. Veuillez sélectionner une image.",
+        barcodeDetected: "Code-barres détecté",
+        barcodeNotDetected: "Aucun code-barres détecté. Réessayez.",
+        imageLoadError: "Erreur de chargement de l'image.",
+        fileReadError: "Erreur de lecture du fichier.",
+        processing: "Traitement de l'image..."
+    },
+    es: {
+        title: "Descodificador de Fecha de Producción",
+        selectManufacturer: "Seleccionar fabricante:",
+        enterDateCode: "Introducir código de fecha:",
+        decodeButton: "Descifrar",
+        scanBarcodeButton: "Escanear código de barras",
+        charCount: "Número de caracteres: ",
+        result: "Resultado:",
+        decodingBoxes: "Descodificación del código:",
+        invalidFormat: "Formato de fecha inválido para {manufacturer}.",
+        invalidCharacters: "El código de fecha contiene caracteres inválidos.",
+        noFileSelected: "No se seleccionó ningún archivo.",
+        invalidFileType: "Tipo de archivo inválido. Por favor, selecciona una imagen.",
+        barcodeDetected: "Código de barras detectado",
+        barcodeNotDetected: "No se detectó ningún código de barras. Intenta de nuevo.",
+        imageLoadError: "Error al cargar la imagen.",
+        fileReadError: "Error al leer el archivo.",
+        processing: "Procesando imagen..."
+    },
+    de: {
+        title: "Produktionsdatums-Decoder",
+        selectManufacturer: "Hersteller auswählen:",
+        enterDateCode: "Datumscode eingeben:",
+        decodeButton: "Dekodieren",
+        scanBarcodeButton: "Barcode scannen",
+        charCount: "Zeichenanzahl: ",
+        result: "Ergebnis:",
+        decodingBoxes: "Code-Dekodierung:",
+        invalidFormat: "Ungültiges Datumsformat für {manufacturer}.",
+        invalidCharacters: "Datumscode enthält ungültige Zeichen.",
+        noFileSelected: "Keine Datei ausgewählt.",
+        invalidFileType: "Ungültiger Dateityp. Bitte ein Bild auswählen.",
+        barcodeDetected: "Barcode erkannt",
+        barcodeNotDetected: "Kein Barcode erkannt.",
+        imageLoadError: "Fehler beim Laden des Bildes.",
+        fileReadError: "Fehler beim Lesen der Datei.",
+        processing: "Bild wird verarbeitet..."
+    },
+    it: {
+        title: "Decodificatore Data di Produzione",
+        selectManufacturer: "Seleziona produttore:",
+        enterDateCode: "Inserisci codice data:",
+        decodeButton: "Decodifica",
+        scanBarcodeButton: "Scansiona codice a barre",
+        charCount: "Numero di caratteri: ",
+        result: "Risultato:",
+        decodingBoxes: "Decodifica del codice:",
+        invalidFormat: "Formato data non valido per {manufacturer}.",
+        invalidCharacters: "Il codice data contiene caratteri non validi.",
+        noFileSelected: "Nessun file selezionato.",
+        invalidFileType: "Tipo di file non valido.",
+        barcodeDetected: "Codice a barre rilevato",
+        barcodeNotDetected: "Codice a barre non rilevato.",
+        imageLoadError: "Errore nel caricamento dell'immagine.",
+        fileReadError: "Errore nella lettura del file.",
+        processing: "Elaborazione immagine..."
+    },
+    pt: {
+        title: "Decodificador de Data de Produção",
+        selectManufacturer: "Selecionar fabricante:",
+        enterDateCode: "Inserir código de data:",
+        decodeButton: "Decodificar",
+        scanBarcodeButton: "Escanear código de barras",
+        charCount: "Número de caracteres: ",
+        result: "Resultado:",
+        decodingBoxes: "Decodificação do código:",
+        invalidFormat: "Formato de data inválido para {manufacturer}.",
+        invalidCharacters: "Código contém caracteres inválidos.",
+        noFileSelected: "Nenhum arquivo selecionado.",
+        invalidFileType: "Tipo de arquivo inválido.",
+        barcodeDetected: "Código de barras detectado",
+        barcodeNotDetected: "Código de barras não detectado.",
+        imageLoadError: "Erro ao carregar imagem.",
+        fileReadError: "Erro ao ler arquivo.",
+        processing: "Processando imagem..."
+    },
+    ru: {
+        title: "Декодер Даты Производства",
+        selectManufacturer: "Выберите производителя:",
+        enterDateCode: "Введите код даты:",
+        decodeButton: "Декодировать",
+        scanBarcodeButton: "Сканировать штрихкод",
+        charCount: "Количество символов: ",
+        result: "Результат:",
+        decodingBoxes: "Расшифровка кода:",
+        invalidFormat: "Неверный формат даты для {manufacturer}.",
+        invalidCharacters: "Код содержит недопустимые символы.",
+        noFileSelected: "Файл не выбран.",
+        invalidFileType: "Недопустимый тип файла.",
+        barcodeDetected: "Штрихкод обнаружен",
+        barcodeNotDetected: "Штрихкод не обнаружен.",
+        imageLoadError: "Ошибка загрузки изображения.",
+        fileReadError: "Ошибка чтения файла.",
+        processing: "Обработка изображения..."
+    },
+    zh: {
+        title: "生产日期解析器",
+        selectManufacturer: "选择制造商:",
+        enterDateCode: "输入日期代码:",
+        decodeButton: "解析",
+        scanBarcodeButton: "扫描条码",
+        charCount: "字符数: ",
+        result: "结果:",
+        decodingBoxes: "代码解析:",
+        invalidFormat: "{manufacturer} 的日期格式无效。",
+        invalidCharacters: "日期代码包含无效字符。",
+        noFileSelected: "未选择文件。",
+        invalidFileType: "无效的文件类型。",
+        barcodeDetected: "检测到条码",
+        barcodeNotDetected: "未检测到条码。",
+        imageLoadError: "图像加载错误。",
+        fileReadError: "文件读取错误。",
+        processing: "正在处理图像..."
+    }
+};
+
 
         // Character count update
         document.getElementById('dateCode').addEventListener('input', function() {
@@ -1251,6 +1353,7 @@ document.getElementById('dateCodeForm').addEventListener('submit', function(even
     </script>
 </body>
 </html>
+
 
 
 
